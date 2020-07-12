@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { SearchBar } from './components/SearchBar';
-import { SearchResults } from './components/SearchResults';
+import { SearchResults, SearchBar, Footer } from './components';
 import style from './App.module.scss';
 
 interface AppProps {
@@ -15,13 +14,16 @@ class App extends Component<AppProps> {
   }
   handlePokemonSearch = (event: any): void => {
     console.log(event);
-}
+  }
 
   render() {
     return (
       <div className={style.app}>
-        <SearchBar handleChange={this.handlePokemonSearch}/>
+        <h1>Pokemon Finder</h1>
+        <span>El que quiere Pokemons, que los busque</span>
+        <SearchBar handleChange={this.handlePokemonSearch} />
         <SearchResults />
+        <Footer />
       </div>
     )
   }

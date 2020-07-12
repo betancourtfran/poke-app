@@ -10,9 +10,7 @@ const SearchBar = ({ handleChange }: SearchBarProps) => {
     let placeholder = 'Type a Pokemon name';
 
     return (
-        <div>
-            <h1>Pokemon Finder</h1>
-            <h2>El que quiere Pokemons, que los busque</h2>
+        <div className={style.container}>
             <input className={style.searchBar} type="text" placeholder={placeholder} onChange={handleChange} />
             <SubmitButton />
         </div>

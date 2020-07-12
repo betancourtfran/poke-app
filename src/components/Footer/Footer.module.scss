@@ -1,0 +1,25 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #bbbbbb;
+    margin-top: 3em;
+    padding-top: 1em;
+    color: #343434;
+}
+
+a {
+    cursor: default;
+    width: 150px;
+    background-color: #efefef;
+    padding: 0.5em 1em;
+    text-decoration: none;
+    text-align: center;
+    border: 1px solid #8c8c8c;
+    border-radius: 3px;
+    &:visited {
+        color: inherit;
+    };
+    &:hover {
+        background-color: #e5e5e5
+    }
+}
