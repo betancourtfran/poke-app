@@ -1,18 +1,19 @@
 import React from 'react';
 import style from './SearchBar.module.scss';
-import { SubmitButton } from '../SubmitButton';
+import { Button } from '../';
 
 interface SearchBarProps {
-    handleChange: (event: any) => void,
+    onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
 };
 
-const SearchBar = ({ handleChange }: SearchBarProps) => {
+const SearchBar = ({ onSubmit }: SearchBarProps) => {
     let placeholder = 'Type a Pokemon name';
-
     return (
         <div className={style.container}>
-            <input className={style.searchBar} type="text" placeholder={placeholder} onChange={handleChange} />
-            <SubmitButton />
+            <form onSubmit={onSubmit}>
+                <input className={style.searchBar} type='text' placeholder={placeholder} />
+                <Button />
+            </form>
         </div>
     )
 }
