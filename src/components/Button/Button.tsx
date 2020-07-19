@@ -5,7 +5,7 @@ interface ButtonProps {
     label?: string,
 }
 
-const Button = ({ label = 'Search' }: ButtonProps) => {
+const Button = ({ label = 'Search' }: ButtonProps): JSX.Element => {
     return (
     <button className={style.button} type='submit'>{label}</button>
     )

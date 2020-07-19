@@ -6,7 +6,7 @@ interface SearchBarProps {
     onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
 };
 
-const SearchBar = ({ onSubmit }: SearchBarProps) => {
+const SearchBar = ({ onSubmit }: SearchBarProps): JSX.Element => {
     let placeholder = 'Type a Pokemon name';
     return (
         <div className={style.container}>

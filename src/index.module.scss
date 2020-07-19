@@ -1,3 +1,7 @@
+html, body {
+  height: 100%;
+}
+
 body {
   background-color: #f5f5f5;
   margin: 0;
@@ -9,6 +13,14 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6{
+  color: #343434;
+}
+
+section h1 {
+  font-size: 1.1em;
+}
+
+strong {
   color: #343434;
 }
 
