@@ -1,31 +1,41 @@
 import React, { Component } from 'react';
 import { SearchResults, SearchBar, Footer } from './components';
+import { getPokemons, getPokemon } from './services/request';
 import style from './App.module.scss';
-import { searchPokemon } from './services/request';
 
-interface AppProps {
-  lastSearch: string,
-  pokemonFound: object
-}
+interface AppState {
+  pokemons: Array<any>,
+  allPokemons: Array<any>
+};
 
-class App extends Component<{}, AppProps> {
+class App extends Component<{}, AppState>{
   constructor(props) {
     super(props);
-    this.state = {
-      lastSearch: '',
-      pokemonFound: {}
-    }
+    this.state = { pokemons: [], allPokemons: [] };
   }
 
-  filterPokemon = (pokemonName: string): void => {
-    searchPokemon(pokemonName).then(({ data }) => this.setState({
-      pokemonFound: data
-    }));
+  formatPokemons = (pokemons): Promise<any> => Promise.all(pokemons.map(async pokemon => await getPokemon(pokemon.name)));
+
+  filterPokemon = async (pokemonName: string) => {
+    let regex = new RegExp(`\\b(\\w*${pokemonName}\\w*)\\b`, 'i'),
+      allPokemons = this.state.allPokemons.filter(pokemon => regex.test(pokemon.name)),
+      formattedPokemons = await this.formatPokemons(allPokemons);
+    this.setState({
+      pokemons: formattedPokemons
+    });
   }
 
   handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
     this.filterPokemon(event.target[0].value);
+  };
+
+  componentWillMount = () => {
+    let result = getPokemons();
+    result.then(res => this.setState({
+      allPokemons: res
+    })
+    );
   }
 
   render = () => {
@@ -34,7 +44,7 @@ class App extends Component<{}, AppProps> {
         <h1>Pokemon Finder</h1>
         <span>El que quiere Pokemons, que los busque</span>
         <SearchBar onSubmit={this.handleSubmit} />
-        <SearchResults pokemonFound={this.state.pokemonFound}/>
+        <SearchResults pokemons={this.state.pokemons} />
         <Footer />
       </div>
     )

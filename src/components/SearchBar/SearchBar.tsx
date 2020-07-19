@@ -1,6 +1,6 @@
 import React from 'react';
-import style from './SearchBar.module.scss';
 import { Button } from '../';
+import style from './SearchBar.module.scss';
 
 interface SearchBarProps {
     onSubmit: (event: React.FormEvent<HTMLFormElement>) => void

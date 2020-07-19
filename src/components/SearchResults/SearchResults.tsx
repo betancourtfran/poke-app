@@ -1,39 +1,41 @@
-import React, { Component } from 'react';
+import React from 'react';
 import style from './SearchResults.module.scss';
 
-interface SearchResultsProps {
-    pokemonFound: any
-};
+export interface SearchResultsProps {
+	pokemons?: Array<any>
+}
 
-
-const SearchResults = ({ pokemonFound }: SearchResultsProps) => {
-    return (
-        <div>
-            <h2>Resultados de la busqueda</h2>
-            <div className={style.container}>
-                <ul>
-                    <li>
-                        <div>
-                            <img width='150' height='150' src="http://lorempixel.com/g/150/150/cats" alt="" />
-                            <p>{pokemonFound.name}</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <img width='150' height='150' src="http://lorempixel.com/g/150/150/cats" alt="" />
-                            <p>{pokemonFound.name}</p>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <img width='150' height='150' src="http://lorempixel.com/g/150/150/cats" alt="" />
-                            <p>{pokemonFound.name}</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    )
+const SearchResults = ({ pokemons }: SearchResultsProps) => {
+	return (
+		<div className={style.container}>
+			{pokemons!.length > 0 && (
+				<>
+					<h2>Resultados de la busqueda</h2>
+					<div>
+						<ul>
+							{pokemons!.map(pokemon => (
+								<li>
+									<div>
+										<img width='150' height='150' src={pokemon!.sprites.front_default} alt={pokemon.name} />
+										<div>
+											<p>{pokemon!.name.toUpperCase()}</p>
+											<p>Habilities</p>
+											<ul>
+												{pokemon!.abilities.map(({ ability }) => <li>{ability.name}</li>)}
+											</ul>
+										</div>
+									</div>
+								</li>
+							)
+							)
+							}
+						</ul>
+					</div>
+				</>
+			)
+			}
+		</div>
+	)
 }
 
 export default SearchResults;
