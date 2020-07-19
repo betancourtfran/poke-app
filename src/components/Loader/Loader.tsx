@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './Loader.module.scss';
 
-interface Loader {
+interface ILoader {
     isFetching: boolean
 }
 
