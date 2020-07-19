@@ -8,30 +8,28 @@ export interface SearchResultsProps {
 const SearchResults = ({ pokemons }: SearchResultsProps) => {
 	return (
 		<div className={style.container}>
+			{pokemons!.length > 0 && <h2>Resultados de la busqueda</h2>}
 			{pokemons!.length > 0 && (
-				<>
-					<h2>Resultados de la busqueda</h2>
-					<div>
-						<ul>
-							{pokemons!.map(pokemon => (
-								<li>
+				<div className={style.results}>
+					<ul>
+						{pokemons!.map(pokemon => (
+							<li>
+								<div>
+									<img width='150' height='150' src={pokemon!.sprites.front_default} alt={pokemon.name} />
 									<div>
-										<img width='150' height='150' src={pokemon!.sprites.front_default} alt={pokemon.name} />
-										<div>
-											<p>{pokemon!.name.toUpperCase()}</p>
-											<p>Habilities</p>
-											<ul>
-												{pokemon!.abilities.map(({ ability }) => <li>{ability.name}</li>)}
-											</ul>
-										</div>
+										<p>{pokemon!.name.toUpperCase()}</p>
+										<p>Habilities</p>
+										<ul>
+											{pokemon!.abilities.map(({ ability }) => <li>{ability.name}</li>)}
+										</ul>
 									</div>
-								</li>
-							)
-							)
-							}
-						</ul>
-					</div>
-				</>
+								</div>
+							</li>
+						)
+						)
+						}
+					</ul>
+				</div>
 			)
 			}
 		</div>
