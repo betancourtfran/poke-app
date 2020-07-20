@@ -1,11 +1,11 @@
 import React from 'react';
 import style from './Loader.module.scss';
 
-interface ILoader {
+interface ILoaderProps {
     isFetching: boolean
 }
 
-const Loader = ({isFetching}): JSX.Element => {
+const Loader = ({isFetching}: ILoaderProps): JSX.Element => {
     return (
         <div className={isFetching? style.showLoader : style.hideLoader}></div>
     )

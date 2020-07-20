@@ -2,13 +2,13 @@ import React from 'react';
 import { Loader } from '../'
 import style from './SearchResults.module.scss';
 
-export interface SearchResultsProps {
-	pokemons?: Array<any>,
+export interface ISearchResultsProps {
+	pokemons: Array<any>,
 	isFetching: boolean,
 	pokemonNotFound: boolean
 }
 
-const SearchResults = ({ pokemons, isFetching, pokemonNotFound }: SearchResultsProps) => {
+const SearchResults = ({ pokemons, isFetching, pokemonNotFound }: ISearchResultsProps) => {
 	return (
 		<div className={style.container}>
 			<Loader isFetching={isFetching} />

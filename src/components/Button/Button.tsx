@@ -1,11 +1,11 @@
 import React from 'react';
 import style from './Button.module.scss';
 
-interface ButtonProps {
+interface IButtonProps {
     label?: string,
 }
 
-const Button = ({ label = 'Search' }: ButtonProps): JSX.Element => {
+const Button = ({ label = 'Search' }: IButtonProps): JSX.Element => {
     return (
     <button className={style.button} type='submit'>{label}</button>
     )

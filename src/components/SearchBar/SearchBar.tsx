@@ -2,11 +2,11 @@ import React from 'react';
 import { Button } from '../';
 import style from './SearchBar.module.scss';
 
-interface SearchBarProps {
+interface ISearchBarProps {
     onSubmit: (event: React.FormEvent<HTMLFormElement>) => void
 };
 
-const SearchBar = ({ onSubmit }: SearchBarProps): JSX.Element => {
+const SearchBar = ({ onSubmit }: ISearchBarProps): JSX.Element => {
     let placeholder = 'Type a Pokemon name';
     return (
         <div className={style.container}>

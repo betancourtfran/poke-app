@@ -3,14 +3,14 @@ import { SearchResults, SearchBar, Footer } from './components';
 import { getPokemons, getPokemon } from './services/request';
 import style from './App.module.scss';
 
-interface IApp {
+interface IAppState {
   pokemons: Array<any>,
   allPokemons: Array<any>,
   isFetching: boolean,
   pokemonNotFound: boolean
 };
 
-class App extends Component<{}, IApp>{
+class App extends Component<{}, IAppState>{
   constructor(props) {
     super(props);
     this.state = { pokemons: [], allPokemons: [], isFetching: false, pokemonNotFound: false };
@@ -24,7 +24,8 @@ class App extends Component<{}, IApp>{
     if (foundPokemons.length === 0) {
       this.setState({
         isFetching: false,
-        pokemonNotFound: true
+        pokemonNotFound: true,
+        pokemons: foundPokemons
       });
       return;
     };
