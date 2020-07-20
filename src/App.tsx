@@ -45,7 +45,7 @@ class App extends Component<{}, IAppState>{
     this.filterPokemon(event.target[0].value);
   };
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     let result = getPokemons();
     result.then(res => this.setState({
       allPokemons: res
