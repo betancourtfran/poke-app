@@ -28,13 +28,13 @@ const SearchResults = ({ pokemons, isFetching, pokemonNotFound }: ISearchResults
 													<strong>#: </strong>{pokemon!.id} <br />
 												</li>
 												<li>
-													<strong>Tipo: </strong>{pokemon!.types.map(({ type }) => type.name).join(', ')} <br />
+													<strong>Type: </strong>{pokemon!.types.map(({ type }) => type.name).join(', ')} <br />
 												</li>
 												<li>
-													<strong>Peso: </strong>{pokemon!.weight} <br />
+													<strong>Weight: </strong>{pokemon!.weight} <br />
 												</li>
 												<li>
-													<strong>Habilidades: </strong>{pokemon!.abilities.map(({ ability }) => ability.name).join(', ')} <br />
+													<strong>Abilities: </strong>{pokemon!.abilities.map(({ ability }) => ability.name).join(', ')} <br />
 												</li>
 											</ul>
 										</section>
@@ -47,7 +47,7 @@ const SearchResults = ({ pokemons, isFetching, pokemonNotFound }: ISearchResults
 					</div>
 				</>
 			) : pokemonNotFound && (
-				<h2>Pokemon no encontrado</h2>
+				<h2>Pokemon not found</h2>
 			)
 			}
 		</div>
