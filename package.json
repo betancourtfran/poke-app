@@ -19,9 +19,9 @@
     "enzyme-adapter-react-16": "^1.15.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^4.0.3",
     "react-test-renderer": "^16.13.1",
-    "sass": "^1.32.0"
+    "sass": "^1.99.0"
   },
   "scripts": {
     "start": "bash -c \"NODE_OPTIONS=--openssl-legacy-provider react-scripts start\"",
