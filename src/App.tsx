@@ -57,7 +57,7 @@ class App extends Component<{}, IAppState>{
     return (
       <div className={style.app}>
         <h1>Pokemon Finder</h1>
-        <span>El que quiere Pokemons, que los busque</span>
+        <span>the one who's looking for pokemons should use this</span>
         <SearchBar onSubmit={this.handleSubmit} />
         <SearchResults pokemons={this.state.pokemons} isFetching={this.state.isFetching} pokemonNotFound={this.state.pokemonNotFound} />
         <Footer />
