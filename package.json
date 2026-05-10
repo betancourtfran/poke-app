@@ -21,19 +21,11 @@
     "react-dom": "^16.13.1",
     "react-scripts": "^4.0.0",
     "react-test-renderer": "^16.13.1",
-<<<<<<< HEAD
-    "sass": "^1.32.0"
-  },
-  "scripts": {
-    "start": "bash -c \"NODE_OPTIONS=--openssl-legacy-provider react-scripts start\"",
-    "build": "bash -c \"NODE_OPTIONS=--openssl-legacy-provider react-scripts build\"",
-=======
     "sass": "^1.99.0"
   },
   "scripts": {
     "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
     "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
->>>>>>> develop
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -55,10 +47,7 @@
   "devDependencies": {
     "@types/enzyme": "^3.10.5",
     "@types/jest": "^26.0.5",
-<<<<<<< HEAD
-=======
     "cross-env": "^10.1.0",
->>>>>>> develop
     "typescript": "^4.9.5"
   }
 }
