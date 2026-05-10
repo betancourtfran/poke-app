@@ -7,13 +7,14 @@ interface IAppState {
   pokemons: Array<any>,
   allPokemons: Array<any>,
   isFetching: boolean,
-  pokemonNotFound: boolean
+  pokemonNotFound: boolean,
+  searchTimeout: NodeJS.Timeout | null
 };
 
 class App extends Component<{}, IAppState>{
   constructor(props) {
     super(props);
-    this.state = { pokemons: [], allPokemons: [], isFetching: false, pokemonNotFound: false };
+    this.state = { pokemons: [], allPokemons: [], isFetching: false, pokemonNotFound: false, searchTimeout: null };
   }
 
   fetchPokemonsInfo = (pokemons): Promise<any> => Promise.all(pokemons.map(async pokemon => await getPokemon(pokemon.name)));
@@ -45,6 +46,37 @@ class App extends Component<{}, IAppState>{
     this.filterPokemon(event.target[0].value);
   };
 
+  handleChange = (value: string): void => {
+    if (this.state.searchTimeout) {
+      clearTimeout(this.state.searchTimeout);
+    }
+
+    if (!value.trim()) {
+      this.setState({
+        pokemons: [],
+        isFetching: false,
+        pokemonNotFound: false,
+        searchTimeout: null
+      });
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      this.setState({
+        isFetching: true
+      });
+      this.filterPokemon(value);
+    }, 300); // 300ms delay
+
+    this.setState({ searchTimeout: timeout });
+  };
+
+  componentWillUnmount = () => {
+    if (this.state.searchTimeout) {
+      clearTimeout(this.state.searchTimeout);
+    }
+  }
+
   componentDidMount = () => {
     let result = getPokemons();
     result.then(res => this.setState({
@@ -58,7 +90,7 @@ class App extends Component<{}, IAppState>{
       <div className={style.app}>
         <h1>Pokemon Finder</h1>
         <span>the one who's looking for pokemons should use this</span>
-        <SearchBar onSubmit={this.handleSubmit} />
+        <SearchBar onSubmit={this.handleSubmit} onChange={this.handleChange} />
         <SearchResults pokemons={this.state.pokemons} isFetching={this.state.isFetching} pokemonNotFound={this.state.pokemonNotFound} />
         <Footer />
       </div>
