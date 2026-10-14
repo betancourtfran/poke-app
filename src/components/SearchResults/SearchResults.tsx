@@ -18,7 +18,7 @@ const SearchResults = ({ pokemons, isFetching, pokemonNotFound }: ISearchResults
 					<div className={style.results}>
 						<ul>
 							{pokemons!.map(pokemon => (
-								<li>
+								<li key={pokemon!.id}>
 									<div className={style.results__result}>
 										<img width='150' height='150' src={pokemon!.sprites.front_default} alt={pokemon.name} />
 										<section>

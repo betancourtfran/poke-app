@@ -1,49 +1,41 @@
 import React, { Component } from 'react';
-import { SearchResults, SearchBar, Footer } from './components';
-import { getPokemons, getPokemon } from './services/request';
+import { SearchResults, SearchBar, Footer, Link } from './components';
+import { getPokemons, filterPokemon } from './services/request';
 import style from './App.module.scss';
 
 interface IAppState {
-  pokemons: Array<any>,
-  allPokemons: Array<any>,
-  isFetching: boolean,
-  pokemonNotFound: boolean,
-  searchTimeout: NodeJS.Timeout | null
-};
+  pokemons: Array<any>;
+  allPokemons: Array<any>;
+  isFetching: boolean;
+  pokemonFound: boolean;
+  searchTimeout: NodeJS.Timeout | null;
+}
 
-class App extends Component<{}, IAppState>{
+class App extends Component<{}, IAppState> {
   constructor(props) {
     super(props);
-    this.state = { pokemons: [], allPokemons: [], isFetching: false, pokemonNotFound: false, searchTimeout: null };
-  }
-
-  fetchPokemonsInfo = (pokemons): Promise<any> => Promise.all(pokemons.map(async pokemon => await getPokemon(pokemon.name)));
-
-  filterPokemon = async (pokemonName: string) => {
-    let regex = new RegExp(`\\b(\\w*${pokemonName}\\w*)\\b`, 'i');
-    let foundPokemons = this.state.allPokemons.filter(pokemon => regex.test(pokemon.name));
-    if (foundPokemons.length === 0) {
-      this.setState({
-        isFetching: false,
-        pokemonNotFound: true,
-        pokemons: foundPokemons
-      });
-      return;
+    this.state = {
+      pokemons: [],
+      allPokemons: [],
+      isFetching: false,
+      pokemonFound: false,
+      searchTimeout: null,
     };
-    let pokemonsWithFullData = await this.fetchPokemonsInfo(foundPokemons);
-    this.setState({
-      pokemons: pokemonsWithFullData,
-      isFetching: false
-    });
   }
 
-  handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+  handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
     if (!event.target[0].value) return;
     this.setState({
-      isFetching: true
+      isFetching: true,
     });
-    this.filterPokemon(event.target[0].value);
+    const result = await filterPokemon(this.state.allPokemons, event.target[0].value);
+    console.log('results: ', result);
+    this.setState({
+      isFetching: result.isFetching,
+      pokemonFound: !!result.pokemonFound,
+      pokemons: result.pokemons
+    })
   };
 
   handleChange = (value: string): void => {
@@ -55,17 +47,22 @@ class App extends Component<{}, IAppState>{
       this.setState({
         pokemons: [],
         isFetching: false,
-        pokemonNotFound: false,
-        searchTimeout: null
+        pokemonFound: false,
+        searchTimeout: null,
       });
       return;
     }
 
-    const timeout = setTimeout(() => {
+    const timeout = setTimeout(async () => {
       this.setState({
-        isFetching: true
+        isFetching: true,
       });
-      this.filterPokemon(value);
+      const result = await filterPokemon(this.state.allPokemons, value);
+      this.setState({
+      isFetching: result.isFetching,
+      pokemonFound: !!result.pokemonFound,
+      pokemons: result.pokemons
+    })
     }, 300); // 300ms delay
 
     this.setState({ searchTimeout: timeout });
@@ -75,15 +72,16 @@ class App extends Component<{}, IAppState>{
     if (this.state.searchTimeout) {
       clearTimeout(this.state.searchTimeout);
     }
-  }
+  };
 
   componentDidMount = () => {
     let result = getPokemons();
-    result.then(res => this.setState({
-      allPokemons: res
-    })
+    result.then((res) =>
+      this.setState({
+        allPokemons: res,
+      }),
     );
-  }
+  };
 
   render = (): JSX.Element => {
     return (
@@ -91,12 +89,15 @@ class App extends Component<{}, IAppState>{
         <h1>Pokemon Finder</h1>
         <span>the one who's looking for pokemons should use this</span>
         <SearchBar onSubmit={this.handleSubmit} onChange={this.handleChange} />
-        <SearchResults pokemons={this.state.pokemons} isFetching={this.state.isFetching} pokemonNotFound={this.state.pokemonNotFound} />
+        <SearchResults
+          pokemons={this.state.pokemons}
+          isFetching={this.state.isFetching}
+          pokemonNotFound={this.state.pokemonFound}
+        />
         <Footer />
       </div>
-    )
-  }
-
+    );
+  };
 }
 
 export default App;

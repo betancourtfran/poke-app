@@ -3,3 +3,5 @@ export { SearchBar } from './SearchBar';
 export { Button } from './Button';
 export { SearchResults } from './SearchResults';
 export { Loader } from './Loader';
+export { Link } from './Link';
+export { Pokemon } from './Pokemon';
